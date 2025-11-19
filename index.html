@@ -3,115 +3,279 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>ფანჯრის ჭრის კუთხის კალკულატორი</title>
+<title>ფანჯრის ჭრის კუთხის კალკულატორი — გაუმჯობესებული</title>
 <style>
-  :root{--accent:#0b73ff;--bg:#f6f8fd;--card:#fff;--orange:#ff6b00}
-  *{box-sizing:border-box}
-  body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);margin:0;padding:20px;display:flex;justify-content:center;min-height:100vh}
-  .wrap{width:1100px;max-width:100%;display:grid;grid-template-columns:380px 1fr;gap:20px;align-items:start}
-  .card{background:var(--card);padding:24px;border-radius:16px;box-shadow:0 6px 30px rgba(20,30,60,0.12)}
-  h2{margin:0 0 18px;font-size:24px;font-weight:700;color:#1a1a1a}
-  h3{margin:18px 0 10px;font-size:18px;font-weight:600;color:#333}
-  label{display:block;font-size:15px;font-weight:500;margin-top:14px;color:#444}
-  input[type=number]{width:100%;padding:14px 16px;border-radius:10px;border:2px solid #e2e6ef;font-size:16px;margin-top:8px;transition:border .2s}
-  input[type=number]:focus{outline:0;border-color:var(--accent)}
-  .shape-selector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-  .shape-btn{padding:16px;border-radius:12px;border:2px solid #e6eefc;background:#fff;cursor:pointer;font-size:16px;font-weight:600;transition:all .2s;text-align:center}
-  .shape-btn:hover{border-color:#b8d4ff;background:#f8fbff;transform:translateY(-2px)}
-  .shape-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 6px 16px rgba(11,115,255,0.35)}
-  .tri-type-selector{display:none;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
-  .tri-type-selector.active{display:grid}
-  .tri-type-btn{padding:12px 10px;border-radius:10px;border:2px solid #e6eefc;background:#fff;cursor:pointer;font-size:14px;font-weight:500;transition:all .2s;text-align:center}
-  .tri-type-btn:hover{border-color:#b8d4ff;background:#f8fbff}
-  .tri-type-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .inputs-group{display:none}
-  .inputs-group.active{display:block}
-  .btn-group{display:flex;gap:10px;margin-top:16px}
-  .btn{padding:14px;background:var(--accent);color:#fff;border:0;border-radius:10px;cursor:pointer;font-size:16px;font-weight:600;transition:all .2s;flex:1}
-  .btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(11,115,255,0.35)}
-  .btn-reset{background:#e8eaef;color:#555}
-  .btn-reset:hover{background:#d8dce5;box-shadow:0 3px 10px rgba(0,0,0,0.12)}
-  .result{margin-top:18px;font-size:15px;background:#f8fbff;padding:18px;border-radius:12px;border:1px solid #e3f0ff;max-height:450px;overflow:auto}
-  .small{font-size:14px;color:#666;margin-top:10px;line-height:1.6}
-  .svgbox{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(20,30,60,0.08);min-height:580px}
-  svg{width:100%;height:100%;max-height:580px}
-  table{width:100%;border-collapse:collapse;font-size:15px;margin-top:10px}
-  td,th{padding:10px 12px;border-bottom:1px solid #f0f3f8;text-align:left}
-  th{background:#f5f8fc;font-weight:600;color:#555;font-size:15px}
-  tr:last-child td{border:0}
-  .edge-selector{margin-top:14px}
-  .edge-label{font-size:15px;font-weight:500;color:#555;margin-bottom:10px}
-  .edge-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .edge-btns.tri{grid-template-columns:1fr 1fr 1fr}
-  .edgeBtn{padding:12px;border-radius:10px;border:2px solid #e6eefc;background:#fff;cursor:pointer;font-size:15px;font-weight:500;transition:all .2s;text-align:center}
-  .edgeBtn:hover{border-color:#b8d4ff;background:#f8fbff}
-  .edgeBtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-  .note{font-size:14px;color:#666;background:#fffbf0;padding:12px;border-radius:10px;margin-top:14px;line-height:1.6;border-left:4px solid #ffc107}
-  .highlight{color:var(--accent);font-weight:600}
-  .warning{background:#fff3e0;border-left-color:var(--orange);color:#c85e00}
-  @media(max-width:900px){
-    .wrap{grid-template-columns:1fr}
-    .svgbox{min-height:400px}
-    .card{padding:20px}
-    h2{font-size:22px}
-    h3{font-size:17px}
-    label{font-size:14px}
-    input[type=number]{font-size:16px;padding:12px 14px}
-    .shape-btn{font-size:15px;padding:14px}
-    .btn{font-size:15px;padding:13px}
-    table{font-size:14px}
-    .result{font-size:14px}
+  :root {
+    --accent:#0a8cff;
+    --accent2:#ff3b3b;
+    --bg:#f5f7ff;
+    --card:#fff;
+    --input-border:#dce4f5;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:var(--bg);
+    margin:0;
+    padding:20px;
+    display:flex;
+    justify-content:center;
+    min-height:100vh;
+  }
+
+  .wrap{
+    width:1100px;
+    max-width:100%;
+    display:grid;
+    grid-template-columns:380px 1fr;
+    gap:20px;
+    align-items:start;
+  }
+
+  .card{
+    background:var(--card);
+    padding:24px;
+    border-radius:16px;
+    box-shadow:0 8px 25px rgba(20,30,60,0.12);
+    transition:0.2s;
+  }
+  .card:hover{ box-shadow:0 12px 30px rgba(20,30,60,0.18); }
+
+  h2{ margin:0 0 18px; font-size:20px; font-weight:700; color:#1a1a1a; }
+  h3{ margin:18px 0 10px; font-size:18px; font-weight:600; color:#333; }
+
+  label{
+    display:block;
+    font-size:15px;
+    font-weight:500;
+    margin-top:12px;
+    color:#444;
+  }
+
+  input[type=number]{
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:2px solid var(--input-border);
+    font-size:15px;
+    margin-top:8px;
+    transition:border .2s, box-shadow .2s;
+  }
+  input[type=number]:focus{
+    outline:0;
+    border-color:var(--accent);
+    box-shadow:0 0 6px rgba(10,140,255,0.3);
+  }
+
+  .shape-selector{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:12px;
+  }
+  .shape-btn{
+    padding:12px;
+    border-radius:12px;
+    border:2px solid var(--input-border);
+    background:#fff;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:all .18s;
+    text-align:center;
+  }
+  .shape-btn:hover{ border-color:var(--accent); transform:translateY(-2px);}
+  .shape-btn.active{ background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 6px 16px rgba(10,140,255,0.25); }
+
+  .tri-type-selector{
+    display:none;
+    grid-template-columns:1fr 1fr 1fr 1fr;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .tri-type-selector.active{ display:grid; }
+  .tri-type-btn{
+    padding:10px;
+    border-radius:10px;
+    border:2px solid var(--input-border);
+    background:#fff;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:500;
+    transition:all .18s;
+    text-align:center;
+  }
+  .tri-type-btn:hover{ border-color:var(--accent); }
+  .tri-type-btn.active{ background:var(--accent2); color:#fff; border-color:var(--accent2); }
+
+  .inputs-group{ display:none; }
+  .inputs-group.active{ display:block; }
+
+  .btn-group{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .btn{
+    padding:12px;
+    background:var(--accent);
+    color:#fff;
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:all .18s;
+    flex:1 1 calc(50% - 5px);
+  }
+  .btn:hover{ transform:translateY(-1px); box-shadow:0 6px 16px rgba(10,140,255,0.2); }
+  .btn-reset{ background:#ff3b3b; color:#fff; }
+  .btn-reset:hover{ box-shadow:0 6px 16px rgba(255,59,59,0.2); }
+
+  .result{
+    margin-top:12px;
+    font-size:14px;
+    background:#f0f7ff;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid #d0e4ff;
+    max-height:480px;
+    overflow:auto;
+  }
+
+  .small{ font-size:13px; color:#666; margin-top:8px; line-height:1.5; }
+
+  .svgbox{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 6px 25px rgba(20,30,60,0.08);
+    min-height:560px;
+    transition:0.2s;
+  }
+  .svgbox:hover{ box-shadow:0 10px 30px rgba(20,30,60,0.12); }
+
+  svg{ width:100%; height:100%; max-height:560px; }
+
+  table{ width:100%; border-collapse:collapse; font-size:14px; margin-top:10px; }
+  td,th{ padding:8px 10px; border-bottom:1px solid #f0f3f8; text-align:left; }
+  th{ background:#f5f8fc; font-weight:600; color:#555; font-size:14px; }
+
+  .edge-selector{ margin-top:12px; }
+  .edge-label{ font-size:15px; font-weight:500; color:#555; margin-bottom:10px; }
+  .edge-btns{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .edge-btns.tri{ grid-template-columns:1fr 1fr 1fr; }
+
+  .edgeBtn{
+    padding:10px;
+    border-radius:10px;
+    border:2px solid var(--input-border);
+    background:#fff;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:500;
+    transition:all .18s;
+    text-align:center;
+  }
+  .edgeBtn:hover{ border-color:var(--accent2); background:#fff0f0; }
+  .edgeBtn.active{ background:var(--accent2); color:#fff; border-color:var(--accent2); }
+
+  .note{
+    font-size:14px;
+    color:#666;
+    background:#fff7f7;
+    padding:10px;
+    border-radius:10px;
+    margin-top:12px;
+    line-height:1.5;
+    border-left:4px solid var(--accent2);
+  }
+
+  .highlight{ color:var(--accent); font-weight:600; }
+  .warning{ background:#fff3e0; border-left-color:var(--accent2); color:#c85e00; }
+
+  /* ===== RESPONSIVE ===== */
+  @media(max-width:1100px){
+    .wrap{ grid-template-columns:1fr; gap:16px; }
+    .svgbox{ min-height:450px; }
+  }
+
+  @media(max-width:768px){
+    body{ padding:12px; }
+    .card{ padding:16px; }
+    .btn{ flex:1 1 100%; }
+    .shape-selector{ grid-template-columns:1fr 1fr; gap:8px; }
+    .tri-type-selector{ grid-template-columns:1fr 1fr 1fr 1fr; gap:6px; }
+  }
+
+  @media(max-width:480px){
+    h2{ font-size:18px; }
+    h3{ font-size:16px; }
+    label{ font-size:14px; }
+    input[type=number]{ font-size:14px; padding:10px; }
+    .svgbox{ min-height:350px; padding:16px; }
+    .btn{ font-size:14px; padding:10px; }
   }
 </style>
+
+
 </head>
 <body>
   <div class="wrap">
-    <div class="card">
-      <h2>📐 ფიგურის ტიპი</h2>
-      <div class="shape-selector">
-        <button class="shape-btn" data-shape="triangle">🔺 სამკუთხედი</button>
-        <button class="shape-btn active" data-shape="quad">◼️ ოთხკუთხედი</button>
+    <div class="card" aria-labelledby="controlsTitle">
+      <h2 id="controlsTitle">📐 ფიგურის ტიპი</h2>
+      <div class="shape-selector" role="tablist">
+        <button class="shape-btn" data-shape="triangle" id="btnTriangle">🔺 სამკუთხედი</button>
+        <button class="shape-btn active" data-shape="quad" id="btnQuad">◼️ ოთხკუთხედი</button>
       </div>
 
-      <div class="tri-type-selector" id="triTypeSelector">
+      <div class="tri-type-selector" id="triTypeSelector" aria-hidden="true">
         <button class="tri-type-btn active" data-type="custom">🔧 ნებისმიერი</button>
+        <button class="tri-type-btn" data-type="right">📐 მართკუთხა</button>
         <button class="tri-type-btn" data-type="equilateral">⚖️ ტოლგვერდა</button>
-        <button class="tri-type-btn" data-type="isosceles">📐 ტოლფერდა</button>
+        <button class="tri-type-btn" data-type="isosceles">📏 ტოლფერდა</button>
       </div>
 
       <h2>📏 ზომები</h2>
-      
+
       <div class="inputs-group" id="triangleCustom">
-        <label>გვერდი A (მმ)</label>
+        <label for="tri_a">გვერდი A (მმ)</label>
         <input id="tri_a" type="number" step="1" value="800" placeholder="მაგ: 800">
-        <label>გვერდი B (მმ)</label>
+        <label for="tri_b">გვერდი B (მმ)</label>
         <input id="tri_b" type="number" step="1" value="900" placeholder="მაგ: 900">
-        <label>გვერდი C (მმ)</label>
+        <label for="tri_c">გვერდი C (მმ)</label>
         <input id="tri_c" type="number" step="1" value="1000" placeholder="მაგ: 1000">
       </div>
 
+      <div class="inputs-group" id="triangleRight">
+        <label for="tri_right_height">სიმაღლე (მმ)</label>
+        <input id="tri_right_height" type="number" step="1" value="1500" placeholder="მაგ: 1500">
+        <label for="tri_right_width">სიგანე (მმ)</label>
+        <input id="tri_right_width" type="number" step="1" value="1000" placeholder="მაგ: 1000">
+        <div class="small">✓ მართკუთხა სამკუთხედი (90°) — ჰიპოტენუზა გამოითვლება.</div>
+      </div>
+
       <div class="inputs-group" id="triangleEquilateral">
-        <label>გვერდი (ყველა გვერდი თანაბარია) (მმ)</label>
+        <label for="tri_eq_side">გვერდი (მმ)</label>
         <input id="tri_eq_side" type="number" step="1" value="1000" placeholder="მაგ: 1000">
-        <div class="small">✓ ყველა გვერდი და კუთხე ერთნაირია (60°-60°-60°)</div>
+        <div class="small">✓ ყველა კუთხე 60°</div>
       </div>
 
       <div class="inputs-group" id="triangleIsosceles">
-        <label>ფუძე (ქვედა გვერდი) (მმ)</label>
+        <label for="tri_iso_base">ფუძე (მმ)</label>
         <input id="tri_iso_base" type="number" step="1" value="1200" placeholder="მაგ: 1200">
-        <label>თანაბარი გვერდები (მარცხენა და მარჯვენა) (მმ)</label>
+        <label for="tri_iso_side">თანაბარი გვერდები (მმ)</label>
         <input id="tri_iso_side" type="number" step="1" value="1000" placeholder="მაგ: 1000">
-        <div class="small">✓ ორი გვერდი თანაბარია</div>
       </div>
 
       <div class="inputs-group active" id="quadInputs">
-        <label>ზედა სიგანე a (მმ)</label>
+        <label for="quad_a">ზედა სიგანე a (მმ)</label>
         <input id="quad_a" type="number" step="1" value="800" placeholder="მაგ: 800">
-        <label>ქვედა სიგანე b (მმ)</label>
+        <label for="quad_b">ქვედა სიგანე b (მმ)</label>
         <input id="quad_b" type="number" step="1" value="950" placeholder="მაგ: 950">
-        <label>სიმაღლე მარცხნივ h₁ (მმ)</label>
+        <label for="quad_h1">სიმაღლე მარცხნივ h₁ (მმ)</label>
         <input id="quad_h1" type="number" step="1" value="1500" placeholder="მაგ: 1500">
-        <label>სიმაღლე მარჯვნივ h₂ (მმ)</label>
+        <label for="quad_h2">სიმაღლე მარჯვნივ h₂ (მმ)</label>
         <input id="quad_h2" type="number" step="1" value="1500" placeholder="მაგ: 1500">
       </div>
 
@@ -130,13 +294,11 @@
         შიდა კუთხე = ორი გვერდის კვეთის კუთხე
       </div>
 
-      <div id="results" class="result">
-        აირჩიე ფიგურა, ჩაწერე ზომები და დააჭირე "გამოთვლას" 👆
-      </div>
+      <div id="results" class="result">აირჩიე ფიგურა, ჩაწერე ზომები და დააჭირე "გამოთვლილს" 👆</div>
     </div>
 
     <div class="card svgbox">
-      <svg id="svg" viewBox="-50 -50 700 600" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <svg id="svg" viewBox="0 0 700 560" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="shadow">
             <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15"/>
@@ -146,428 +308,276 @@
       </svg>
     </div>
   </div>
+
 <script>
-let currentShape = 'quad';
-let currentTriType = 'custom';
-let lastComputation = null;
-let activeEdge = 'right';
+'use strict';
+/* ---------- state ---------- */
+const state = {
+  currentShape: 'quad',
+  currentTriType: 'custom',
+  lastComputation: null,
+  activeEdge: 'right'
+};
+
+/* ---------- helpers ---------- */
+const el = id => document.getElementById(id);
+const svgGroup = el('drawing');
+const resultsEl = el('results');
+const edgeBtnsContainer = el('edgeBtnsContainer');
 
 function dot(u,v){return u.x*v.x + u.y*v.y}
 function len(v){return Math.hypot(v.x,v.y)}
-function angleBetween(u,v){
-  let d = dot(u,v)/(len(u)*len(v));
-  d = Math.max(-1, Math.min(1, d));
-  return Math.acos(d);
-}
-
-function interiorAngleAt(prev, P, next){
-  let v1 = {x: prev.x - P.x, y: prev.y - P.y};
-  let v2 = {x: next.x - P.x, y: next.y - P.y};
+function angleBetween(u,v){return Math.acos(Math.max(-1,Math.min(1,dot(u,v)/(len(u)*len(v)))));}
+function interiorAngleAt(prev,P,next){
+  const v1={x:prev.x-P.x,y:prev.y-P.y};
+  const v2={x:next.x-P.x,y:next.y-P.y};
   return angleBetween(v1,v2);
 }
+function edgeLength(P,Q){return Math.hypot(Q.x-P.x,Q.y-P.y)}
 
-function edgeLength(P,Q){return Math.hypot(Q.x - P.x, Q.y - P.y)}
-
+/* ---------- geometry ---------- */
 function computeTriangle(a,b,c){
-  const angleA = Math.acos((b*b + c*c - a*a) / (2*b*c));
-  const angleB = Math.acos((a*a + c*c - b*b) / (2*a*c));
-  
-  const pts = {
-    A: {x:0, y:0},
-    B: {x:c, y:0},
-    C: {x:b * Math.cos(angleA), y:b * Math.sin(angleA)}
-  };
-  
-  const order = [pts.A, pts.B, pts.C];
-  const names = ['A','B','C'];
-  let vertices = {};
-  
+  const angleA = Math.acos((b*b + c*c - a*a)/(2*b*c));
+  const angleB = Math.acos((a*a + c*c - b*b)/(2*a*c));
+  const A={x:0,y:0}, B={x:c,y:0}, C={x:b*Math.cos(angleA),y:b*Math.sin(angleA)};
+  const pts={A,B,C}, order=[A,B,C], names=['A','B','C'];
+  const vertices={};
   for(let i=0;i<3;i++){
-    const P = order[i];
-    const prev = order[(i+2)%3];
-    const next = order[(i+1)%3];
-    const angRad = interiorAngleAt(prev,P,next);
-    vertices[names[i]] = {
-      x:P.x, y:P.y,
-      interior_deg: angRad * 180/Math.PI,
-      cut_deg: (angRad * 180/Math.PI)/2
-    };
+    const P=order[i], prev=order[(i+2)%3], next=order[(i+1)%3];
+    const ang = interiorAngleAt(prev,P,next);
+    vertices[names[i]]={x:P.x,y:P.y,interior_deg:ang*180/Math.PI, cut_deg:(ang*180/Math.PI)/2};
   }
-  
-  const edges = {
-    ab: {P:pts.A, Q:pts.B, pName:'A', qName:'B'},
-    bc: {P:pts.B, Q:pts.C, pName:'B', qName:'C'},
-    ca: {P:pts.C, Q:pts.A, pName:'C', qName:'A'}
-  };
-  
-  for(let k in edges){
-    const e = edges[k];
-    e.length = edgeLength(e.P, e.Q);
-    e.pInterior = vertices[e.pName].interior_deg;
-    e.qInterior = vertices[e.qName].interior_deg;
-    e.pCut = vertices[e.pName].cut_deg;
-    e.qCut = vertices[e.qName].cut_deg;
+  const edges = {ab:{P:A,Q:B,pName:'A',qName:'B'}, bc:{P:B,Q:C,pName:'B',qName:'C'}, ca:{P:C,Q:A,pName:'C',qName:'A'}};
+  for(const k in edges){
+    const e=edges[k];
+    e.length=edgeLength(e.P,e.Q);
+    e.pInterior=vertices[e.pName].interior_deg;
+    e.qInterior=vertices[e.qName].interior_deg;
+    e.pCut=vertices[e.pName].cut_deg;
+    e.qCut=vertices[e.qName].cut_deg;
   }
-  
-  return {pts, vertices, edges, shape:'triangle'};
+  return {pts,vertices,edges,shape:'triangle'};
+}
+
+function computeTriangleRightFromBaseHeight(base, height){
+  const A={x:0,y:0}, B={x:base,y:0}, C={x:0,y:height};
+  const pts={A,B,C}, order=[A,B,C], names=['A','B','C'];
+  const vertices={};
+  for(let i=0;i<3;i++){
+    const P=order[i], prev=order[(i+2)%3], next=order[(i+1)%3];
+    const ang=interiorAngleAt(prev,P,next);
+    vertices[names[i]]={x:P.x,y:P.y,interior_deg:ang*180/Math.PI, cut_deg:(ang*180/Math.PI)/2};
+  }
+  const edges={ab:{P:A,Q:B,pName:'A',qName:'B'}, bc:{P:B,Q:C,pName:'B',qName:'C'}, ca:{P:C,Q:A,pName:'C',qName:'A'}};
+  for(const k in edges){
+    const e=edges[k];
+    e.length=edgeLength(e.P,e.Q);
+    e.pInterior=vertices[e.pName].interior_deg;
+    e.qInterior=vertices[e.qName].interior_deg;
+    e.pCut=vertices[e.pName].cut_deg;
+    e.qCut=vertices[e.qName].cut_deg;
+  }
+  return {pts,vertices,edges,shape:'triangle'};
 }
 
 function computeQuad(a,b,h1,h2){
-  const pts = {
-    TL: {x:0, y:0},
-    TR: {x:a, y:0},
-    BR: {x:b, y:h2},
-    BL: {x:0, y:h1}
-  };
-  
-  const order = [pts.TL, pts.TR, pts.BR, pts.BL];
-  const names = ['TL','TR','BR','BL'];
-  let vertices = {};
-  
+  const TL={x:0,y:0}, TR={x:a,y:0}, BR={x:b,y:h2}, BL={x:0,y:h1};
+  const pts={TL,TR,BR,BL}, order=[TL,TR,BR,BL], names=['TL','TR','BR','BL'];
+  const vertices={};
   for(let i=0;i<4;i++){
-    const P = order[i];
-    const prev = order[(i+3)%4];
-    const next = order[(i+1)%4];
-    const angRad = interiorAngleAt(prev,P,next);
-    vertices[names[i]] = {
-      x:P.x, y:P.y,
-      interior_deg: angRad * 180/Math.PI,
-      cut_deg: (angRad * 180/Math.PI)/2
-    };
+    const P=order[i], prev=order[(i+3)%4], next=order[(i+1)%4];
+    const ang=interiorAngleAt(prev,P,next);
+    vertices[names[i]]={x:P.x,y:P.y,interior_deg:ang*180/Math.PI, cut_deg:(ang*180/Math.PI)/2};
   }
-  
-  const edges = {
-    top: {P:pts.TL, Q:pts.TR, pName:'TL', qName:'TR'},
-    right: {P:pts.TR, Q:pts.BR, pName:'TR', qName:'BR'},
-    bottom: {P:pts.BR, Q:pts.BL, pName:'BR', qName:'BL'},
-    left: {P:pts.BL, Q:pts.TL, pName:'BL', qName:'TL'}
-  };
-  
-  for(let k in edges){
-    const e = edges[k];
-    e.length = edgeLength(e.P, e.Q);
-    e.pInterior = vertices[e.pName].interior_deg;
-    e.qInterior = vertices[e.qName].interior_deg;
-    e.pCut = vertices[e.pName].cut_deg;
-    e.qCut = vertices[e.qName].cut_deg;
+  const edges={top:{P:TL,Q:TR,pName:'TL',qName:'TR'}, right:{P:TR,Q:BR,pName:'TR',qName:'BR'}, bottom:{P:BR,Q:BL,pName:'BR',qName:'BL'}, left:{P:BL,Q:TL,pName:'BL',qName:'TL'}};
+  for(const k in edges){
+    const e=edges[k];
+    e.length=edgeLength(e.P,e.Q);
+    e.pInterior=vertices[e.pName].interior_deg;
+    e.qInterior=vertices[e.qName].interior_deg;
+    e.pCut=vertices[e.pName].cut_deg;
+    e.qCut=vertices[e.qName].cut_deg;
   }
-  
-  return {pts, vertices, edges, shape:'quad'};
+  return {pts,vertices,edges,shape:'quad'};
 }
 
-const calcBtn = document.getElementById('calcBtn');
-const resetBtn = document.getElementById('resetBtn');
-const results = document.getElementById('results');
-const svgGroup = document.getElementById('drawing');
-const shapeButtons = document.querySelectorAll('.shape-btn');
-const triTypeButtons = document.querySelectorAll('.tri-type-btn');
-const triTypeSelector = document.getElementById('triTypeSelector');
-const triangleCustom = document.getElementById('triangleCustom');
-const triangleEquilateral = document.getElementById('triangleEquilateral');
-const triangleIsosceles = document.getElementById('triangleIsosceles');
-const quadInputs = document.getElementById('quadInputs');
-const edgeBtnsContainer = document.getElementById('edgeBtnsContainer');
-
-shapeButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    currentShape = btn.dataset.shape;
-    shapeButtons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    
-    triTypeSelector.classList.toggle('active', currentShape === 'triangle');
-    updateTriangleInputs();
-    quadInputs.classList.toggle('active', currentShape === 'quad');
-    
-    updateEdgeButtons();
-    results.innerHTML = 'აირჩიე ფიგურა, ჩაწერე ზომები და დააჭირე "გამოთვლას" 👆';
-    svgGroup.innerHTML = '';
-    lastComputation = null;
+/* ---------- UI ---------- */
+function setActiveEdge(name){
+  state.activeEdge=name;
+  updateEdgeButtonsUI();
+  if(state.lastComputation) renderResults(state.lastComputation);
+}
+function updateEdgeButtonsUI(){
+  const btns=edgeBtnsContainer.querySelectorAll('.edgeBtn');
+  btns.forEach(b=>b.classList.toggle('active',b.dataset.edge===state.activeEdge));
+  svgGroup.querySelectorAll('line[data-edge]').forEach(l=>{
+    if(l.getAttribute('data-edge')===state.activeEdge){l.setAttribute('stroke','#ff6b00');l.setAttribute('stroke-width','6');}
+    else {l.setAttribute('stroke','#2b6be6');l.setAttribute('stroke-width','4');}
   });
-});
-
-triTypeButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    currentTriType = btn.dataset.type;
-    triTypeButtons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    updateTriangleInputs();
+}
+function createEdgeButtons(data){
+  edgeBtnsContainer.innerHTML='';
+  Object.keys(data.edges).forEach(key=>{
+    const btn=document.createElement('button');
+    btn.className='edgeBtn'; btn.dataset.edge=key; btn.type='button'; btn.textContent=key.toUpperCase();
+    btn.addEventListener('click',()=>setActiveEdge(key));
+    edgeBtnsContainer.appendChild(btn);
   });
-});
-
-function updateTriangleInputs(){
-  triangleCustom.classList.remove('active');
-  triangleEquilateral.classList.remove('active');
-  triangleIsosceles.classList.remove('active');
-  
-  if(currentShape === 'triangle'){
-    if(currentTriType === 'custom') triangleCustom.classList.add('active');
-    else if(currentTriType === 'equilateral') triangleEquilateral.classList.add('active');
-    else if(currentTriType === 'isosceles') triangleIsosceles.classList.add('active');
-  }
+  if(!Object.keys(data.edges).includes(state.activeEdge)) state.activeEdge=Object.keys(data.edges)[0];
+  updateEdgeButtonsUI();
 }
 
-function updateEdgeButtons(){
-  edgeBtnsContainer.innerHTML = '';
-  edgeBtnsContainer.className = 'edge-btns';
-  
-  if(currentShape === 'triangle'){
-    edgeBtnsContainer.classList.add('tri');
-    ['ab','bc','ca'].forEach(edge => {
-      const btn = document.createElement('button');
-      btn.className = 'edgeBtn';
-      btn.dataset.edge = edge;
-      btn.textContent = edge.toUpperCase();
-      btn.addEventListener('click', () => setActiveEdge(edge));
-      edgeBtnsContainer.appendChild(btn);
-    });
-    activeEdge = 'ab';
-  } else {
-    [
-      {id:'top', label:'⬆️ ზედა'},
-      {id:'right', label:'➡️ მარჯვენა'},
-      {id:'bottom', label:'⬇️ ქვედა'},
-      {id:'left', label:'⬅️ მარცხენა'}
-    ].forEach(({id, label}) => {
-      const btn = document.createElement('button');
-      btn.className = 'edgeBtn';
-      btn.dataset.edge = id;
-      btn.textContent = label;
-      btn.addEventListener('click', () => setActiveEdge(id));
-      edgeBtnsContainer.appendChild(btn);
-    });
-    activeEdge = 'right';
-  }
-}
-
+/* ---------- render ---------- */
 function renderSVG(data){
-  svgGroup.innerHTML = '';
-  const pts = data.pts;
-  const ptsArray = Object.values(pts);
-  const maxX = Math.max(...ptsArray.map(p => p.x));
-  const maxY = Math.max(...ptsArray.map(p => p.y));
-  const minX = Math.min(...ptsArray.map(p => p.x));
-  const minY = Math.min(...ptsArray.map(p => p.y));
-  const width = maxX - minX;
-  const height = maxY - minY;
-  const scale = Math.min(500 / Math.max(width,1), 450 / Math.max(height,1));
-
-  function S(p){return {x: (p.x - minX) * scale + 80, y: (p.y - minY) * scale + 60}}
-  
-  const scaledPts = {};
-  for(let k in pts) scaledPts[k] = S(pts[k]);
-
-  const poly = document.createElementNS('http://www.w3.org/2000/svg','polygon');
-  const pointsStr = Object.values(scaledPts).map(p => `${p.x},${p.y}`).join(' ');
-  poly.setAttribute('points', pointsStr);
-  poly.setAttribute('fill','#fafcff');
-  poly.setAttribute('stroke','#99c2ff');
-  poly.setAttribute('stroke-width','3');
-  poly.setAttribute('filter','url(#shadow)');
+  svgGroup.innerHTML='';
+  const pts=Object.values(data.pts);
+  const xs=pts.map(p=>p.x), ys=pts.map(p=>p.y);
+  const minX=Math.min(...xs), maxX=Math.max(...xs), minY=Math.min(...ys), maxY=Math.max(...ys);
+  const width=Math.max(1,maxX-minX), height=Math.max(1,maxY-minY);
+  const viewW=520, viewH=420, scale=Math.min(viewW/width,viewH/height);
+  function S(p){return {x:(p.x-minX)*scale+80, y:(maxY-p.y)*scale+60};}
+  const scaled={}; for(const k in data.pts) scaled[k]=S(data.pts[k]);
+  const poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  poly.setAttribute('points',Object.values(scaled).map(p=>`${p.x},${p.y}`).join(' '));
+  poly.setAttribute('fill','#fafcff'); poly.setAttribute('stroke','#99c2ff'); poly.setAttribute('stroke-width','3'); poly.setAttribute('filter','url(#shadow)');
   svgGroup.appendChild(poly);
-
-  for(let edgeId in data.edges){
-    const edge = data.edges[edgeId];
-    const pA = scaledPts[edge.pName];
-    const pB = scaledPts[edge.qName];
-    
-    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
-    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1', pA.x); 
-    line.setAttribute('y1', pA.y);
-    line.setAttribute('x2', pB.x); 
-    line.setAttribute('y2', pB.y);
-    line.setAttribute('stroke','#2b6be6'); 
-    line.setAttribute('stroke-width','4');
-    line.setAttribute('stroke-linecap','round');
-    line.setAttribute('data-edge', edgeId);
-    line.style.cursor='pointer';
-    line.style.transition='all 0.2s';
-    line.addEventListener('click', ()=>{setActiveEdge(edgeId)});
+  for(const key in data.edges){
+    const e=data.edges[key], pA=scaled[e.pName], pB=scaled[e.qName];
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',pA.x); line.setAttribute('y1',pA.y); line.setAttribute('x2',pB.x); line.setAttribute('y2',pB.y);
+    line.setAttribute('stroke','#2b6be6'); line.setAttribute('stroke-width','4'); line.setAttribute('stroke-linecap','round');
+    line.setAttribute('data-edge',key); line.style.cursor='pointer';
+    line.addEventListener('click',()=>setActiveEdge(key));
     g.appendChild(line);
-
-    const mx = (pA.x + pB.x)/2, my = (pA.y + pB.y)/2;
-    const text = document.createElementNS('http://www.w3.org/2000/svg','text');
-    text.setAttribute('x', mx); 
-    text.setAttribute('y', my - 12);
-    text.setAttribute('text-anchor','middle'); 
-    text.setAttribute('font-size','15'); 
-    text.setAttribute('font-weight','600');
-    text.setAttribute('fill','#0b3b99');
-    text.textContent = Math.round(edge.length) + ' mm';
+    const mx=(pA.x+pB.x)/2,my=(pA.y+pB.y)/2;
+    const text=document.createElementNS('http://www.w3.org/2000/svg','text');
+    text.setAttribute('x',mx); text.setAttribute('y',my-12); text.setAttribute('text-anchor','middle');
+    text.setAttribute('font-size','13'); text.setAttribute('font-weight','600'); text.setAttribute('fill','#0b3b99');
+    text.textContent=`${Math.round(e.length)} mm`;
     g.appendChild(text);
     svgGroup.appendChild(g);
   }
-
-  for(let vName in data.vertices){
-    const v = data.vertices[vName];
-    const p = scaledPts[vName];
-    
-    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    c.setAttribute('cx', p.x); 
-    c.setAttribute('cy', p.y);
-    c.setAttribute('r','6');
-    c.setAttribute('fill','#0b3b99');
-    c.setAttribute('stroke','#fff');
-    c.setAttribute('stroke-width','2');
+  for(const name in data.vertices){
+    const v=data.vertices[name], p=scaled[name];
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',p.x); c.setAttribute('cy',p.y); c.setAttribute('r','6'); c.setAttribute('fill','#0b3b99'); c.setAttribute('stroke','#fff'); c.setAttribute('stroke-width','2');
     svgGroup.appendChild(c);
-
-    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
-    t.setAttribute('x', p.x + 12); 
-    t.setAttribute('y', p.y + 5);
-    t.setAttribute('font-size','14'); 
-    t.setAttribute('font-weight','700');
-    t.setAttribute('fill','#1a1a1a');
-    t.textContent = vName;
-    svgGroup.appendChild(t);
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',p.x+10); t.setAttribute('y',p.y+6); t.setAttribute('font-size','12'); t.setAttribute('font-weight','700'); t.setAttribute('fill','#1a1a1a');
+    t.textContent=name; svgGroup.appendChild(t);
   }
-
-  highlightEdge(activeEdge);
+  updateEdgeButtonsUI();
 }
 
-function highlightEdge(edgeId){
-  const edgeBtns = edgeBtnsContainer.querySelectorAll('.edgeBtn');
-  edgeBtns.forEach(b => b.classList.toggle('active', b.dataset.edge === edgeId));
-  
-  const lines = svgGroup.querySelectorAll('line[data-edge]');
-  lines.forEach(l=>{
-    if(l.getAttribute('data-edge') === edgeId){
-      l.setAttribute('stroke','#ff6b00');
-      l.setAttribute('stroke-width','6');
-    } else {
-      l.setAttribute('stroke','#2b6be6');
-      l.setAttribute('stroke-width','4');
-    }
+/* ---------- results ---------- */
+function renderResults(data){
+  if(!data){resultsEl.innerHTML='<div style="color:#999">პირველად დააჭირე "გამოთვლას" 👆</div>';return;}
+  state.lastComputation=data;
+  const e=data.edges[state.activeEdge];
+  let html=`<h3>📏 არჩეული გვერდი: <span class="highlight">${state.activeEdge.toUpperCase()}</span></h3>`;
+  html+=`<table><thead><tr><th>პარამეტრი</th><th>ღირებულება</th></tr></thead><tbody>`;
+  html+=`<tr><td><strong>სიგრძე</strong></td><td><strong>${e.length.toFixed(1)} mm</strong></td></tr>`;
+  html+=`<tr><td>წვერი ${e.pName} — შიდა კუთხე</td><td>${e.pInterior.toFixed(2)}°</td></tr>`;
+  html+=`<tr><td>წვერი ${e.pName} — ჭრის კუთხე</td><td><strong>${e.pCut.toFixed(2)}°</strong></td></tr>`;
+  html+=`<tr><td>წვერი ${e.qName} — შიდა კუთხე</td><td>${e.qInterior.toFixed(2)}°</td></tr>`;
+  html+=`<tr><td>წვერი ${e.qName} — ჭრის კუთხე</td><td><strong>${e.qCut.toFixed(2)}°</strong></td></tr>`;
+  html+=`</tbody></table>`;
+  if(e.pCut>50 || e.qCut>50) html+=`<div class="note warning">⚠️ <strong>ყურადღება!</strong> ჭრის კუთხე > 50°. გამოიყენე ფიქსირებული კლემი.</div>`;
+  html+=`<h3>📊 ყველა წვერის დეტალები</h3>`;
+  html+=`<table><thead><tr><th>წვერი</th><th>შიდა კუთხე</th><th>ჭრის კუთხე</th></tr></thead><tbody>`;
+  for(const vName in data.vertices){
+    const v=data.vertices[vName];
+    html+=`<tr><td><strong>${vName}</strong></td><td>${v.interior_deg.toFixed(2)}°</td><td><strong>${v.cut_deg.toFixed(2)}°</strong></td></tr>`;
+  }
+  html+=`</tbody></table>`;
+  resultsEl.innerHTML=html;
+}
+
+/* ---------- input parsing ---------- */
+function parsePositive(...ids){return ids.map(id=>{
+  const val=Number((el(id).value||'').toString().trim());
+  if(Number.isFinite(val)&&val>0) return val;
+  throw new Error('შეავსეთ ყველა ველი დადებითი რიცხვებით');
+});}
+
+/* ---------- UI wiring ---------- */
+document.querySelectorAll('.shape-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    state.currentShape=btn.dataset.shape;
+    document.querySelectorAll('.shape-btn').forEach(b=>b.classList.toggle('active',b===btn));
+    document.getElementById('triTypeSelector').classList.toggle('active',state.currentShape==='triangle');
+    document.getElementById('quadInputs').classList.toggle('active',state.currentShape==='quad');
+    updateTriangleInputsUI();
+    resultsEl.innerHTML='აირჩიე ფიგურა, ჩაწერე ზომები და დააჭირე "გამოთვლას" 👆';
+    svgGroup.innerHTML=''; edgeBtnsContainer.innerHTML=''; state.lastComputation=null;
   });
+});
+
+document.querySelectorAll('.tri-type-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    state.currentTriType=btn.dataset.type;
+    document.querySelectorAll('.tri-type-btn').forEach(b=>b.classList.toggle('active',b===btn));
+    updateTriangleInputsUI();
+  });
+});
+
+function updateTriangleInputsUI(){
+  ['triangleCustom','triangleRight','triangleEquilateral','triangleIsosceles'].forEach(id=> el(id).classList.remove('active'));
+  if(state.currentShape==='triangle'){
+    if(state.currentTriType==='custom') el('triangleCustom').classList.add('active');
+    else if(state.currentTriType==='right') el('triangleRight').classList.add('active');
+    else if(state.currentTriType==='equilateral') el('triangleEquilateral').classList.add('active');
+    else if(state.currentTriType==='isosceles') el('triangleIsosceles').classList.add('active');
+  }
 }
 
-function showResults(data, edgeName){
-  if(!data){
-    results.innerHTML = '<div style="color:#999">პირველად დააჭირე "გამოთვლას" 👆</div>'; 
-    return;
-  }
-  lastComputation = data;
-  activeEdge = edgeName || activeEdge;
-  highlightEdge(activeEdge);
-
-  const e = data.edges[activeEdge];
-
-  let html = `<h3>📏 არჩეული გვერდი: <span class="highlight">${activeEdge.toUpperCase()}</span></h3>`;
-  html += `<table><tbody>`;
-  html += `<tr><th>პარამეტრი</th><th>ღირებულება</th></tr>`;
-  html += `<tr><td><strong>სიგრძე</strong></td><td><strong>${e.length.toFixed(1)} mm</strong></td></tr>`;
-  html += `<tr><td>წვერი ${e.pName} — შიდა კუთხე</td><td>${e.pInterior.toFixed(2)}°</td></tr>`;
-  html += `<tr><td>წვერი ${e.pName} — ჭრის კუთხე</td><td><strong>${e.pCut.toFixed(2)}°</strong></td></tr>`;
-  html += `<tr><td>წვერი ${e.qName} — შიდა კუთხე</td><td>${e.qInterior.toFixed(2)}°</td></tr>`;
-  html += `<tr><td>წვერი ${e.qName} — ჭრის კუთხე</td><td><strong>${e.qCut.toFixed(2)}°</strong></td></tr>`;
-  html += `</tbody></table>`;
-
-  const hasSharpAngle = e.pCut > 50 || e.qCut > 50;
-  if(hasSharpAngle){
-    html += `<div class="note warning">⚠️ <strong>ყურადღება!</strong> დაბალი კუთხე (ჭრის კუთხე > 50°). გამოიყენე ფიქსირებული კლემი.</div>`;
-  }
-
-  html += `<h3>📊 ყველა წვერის დეტალები</h3>`;
-  html += `<table><thead><tr><th>წვერი</th><th>შიდა კუთხე</th><th>ჭრის კუთხე</th></tr></thead><tbody>`;
-  for(let vName in data.vertices){
-    const v = data.vertices[vName];
-    html += `<tr><td><strong>${vName}</strong></td><td>${v.interior_deg.toFixed(2)}°</td><td><strong>${v.cut_deg.toFixed(2)}°</strong></td></tr>`;
-  }
-  html += `</tbody></table>`;
-
-  results.innerHTML = html;
-}
-
-function setActiveEdge(name){
-  activeEdge = name;
-  if(lastComputation) showResults(lastComputation, name);
-}
-
-calcBtn.addEventListener('click', ()=>{
-  let data;
-  
-  try {
-    if(currentShape === 'triangle'){
-      let a, b, c;
-      
-      if(currentTriType === 'equilateral'){
-        const side = parseFloat(document.getElementById('tri_eq_side').value);
-        if(isNaN(side) || side <= 0){
-          results.innerHTML = '<div style="color:#d32f2f;padding:12px;background:#ffebee;border-radius:8px">❌ შეავსეთ ველი დადებითი რიცხვით!</div>';
-          return;
-        }
-        a = b = c = side;
-      } else if(currentTriType === 'isosceles'){
-        const base = parseFloat(document.getElementById('tri_iso_base').value);
-        const side = parseFloat(document.getElementById('tri_iso_side').value);
-        if([base, side].some(x => isNaN(x) || x <= 0)){
-          results.innerHTML = '<div style="color:#d32f2f;padding:12px;background:#ffebee;border-radius:8px">❌ შეავსეთ ყველა ველი დადებითი რიცხვებით!</div>';
-          return;
-        }
-        if(side + side <= base){
-          results.innerHTML = '<div style="color:#d32f2f;padding:12px;background:#ffebee;border-radius:8px">❌ გვერდები ძალიან მოკლეა! ორი გვერდის ჯამი უნდა იყოს ფუძეზე მეტი.</div>';
-          return;
-        }
-        c = base;
-        a = b = side;
+/* ---------- calc & reset ---------- */
+el('calcBtn').addEventListener('click',()=>{
+  try{
+    let data;
+    if(state.currentShape==='triangle'){
+      if(state.currentTriType==='right'){
+        const [h,w]=parsePositive('tri_right_height','tri_right_width');
+        data=computeTriangleRightFromBaseHeight(w,h);
+      } else if(state.currentTriType==='equilateral'){
+        const [s]=parsePositive('tri_eq_side'); data=computeTriangle(s,s,s);
+      } else if(state.currentTriType==='isosceles'){
+        const [base,side]=parsePositive('tri_iso_base','tri_iso_side');
+        if(side+side<=base) throw new Error('არასწორი ზომები: ორი გვერდის ჯამი უნდა აღემატებოდეს ფუძეს');
+        data=computeTriangle(base,side,side);
       } else {
-        a = parseFloat(document.getElementById('tri_a').value);
-        b = parseFloat(document.getElementById('tri_b').value);
-        c = parseFloat(document.getElementById('tri_c').value);
-        
-        if([a, b, c].some(x => isNaN(x) || x <= 0)){
-          results.innerHTML = '<div style="color:#d32f2f;padding:12px;background:#ffebee;border-radius:8px">❌ შეავსეთ ყველა ველი დადებითი რიცხვებით!</div>';
-          return;
-        }
-        
-        if(a + b <= c || a + c <= b || b + c <= a){
-          results.innerHTML = '<div style="color:#d32f2f;padding:12px;background:#ffebee;border-radius:8px">❌ არასწორი სამკუთხედი! ნებისმიერი ორი გვერდის ჯამი უნდა იყოს მესამეზე მეტი.</div>';
-          return;
-        }
+        const [a,b,c]=parsePositive('tri_a','tri_b','tri_c');
+        if(a+b<=c||a+c<=b||b+c<=a) throw new Error('არასწორი სამკუთხედის გვერდები');
+        data=computeTriangle(a,b,c);
       }
-      
-      data = computeTriangle(a, b, c);
-      
     } else {
-      const a = parseFloat(document.getElementById('quad_a').value);
-      const b = parseFloat(document.getElementById('quad_b').value);
-      const h1 = parseFloat(document.getElementById('quad_h1').value);
-      const h2 = parseFloat(document.getElementById('quad_h2').value);
-      
-      if([a, b, h1, h2].some(x => isNaN(x) || x <= 0)){
-        results.innerHTML = '<div style="color:#d32f2f;padding:12px;background:#ffebee;border-radius:8px">❌ შეავსეთ ყველა ველი დადებითი რიცხვებით!</div>';
-        return;
-      }
-      
-      data = computeQuad(a, b, h1, h2);
+      const [a,b,h1,h2]=parsePositive('quad_a','quad_b','quad_h1','quad_h2');
+      data=computeQuad(a,b,h1,h2);
     }
-    
+    state.lastComputation=data;
+    createEdgeButtons(data);
     renderSVG(data);
-    showResults(data, activeEdge);
-    
-  } catch(err) {
-    results.innerHTML = `<div style="color:#d32f2f;padding:12px;background:#ffebee;border-radius:8px">❌ შეცდომა: ${err.message}</div>`;
+    renderResults(data);
+  }catch(err){
+    resultsEl.innerHTML=`<div style="color:#d32f2f;padding:10px;background:#ffebee;border-radius:8px">❌ ${err.message}</div>`;
     console.error(err);
   }
 });
 
-resetBtn.addEventListener('click', ()=>{
-  document.getElementById('tri_a').value = '800';
-  document.getElementById('tri_b').value = '900';
-  document.getElementById('tri_c').value = '1000';
-  document.getElementById('tri_eq_side').value = '1000';
-  document.getElementById('tri_iso_base').value = '1200';
-  document.getElementById('tri_iso_side').value = '1000';
-  document.getElementById('quad_a').value = '800';
-  document.getElementById('quad_b').value = '950';
-  document.getElementById('quad_h1').value = '1500';
-  document.getElementById('quad_h2').value = '1500';
-  
-  results.innerHTML = 'აირჩიე ფიგურა, ჩაწერე ზომები და დააჭირე "გამოთვლას" 👆';
-  svgGroup.innerHTML = '';
-  lastComputation = null;
+el('resetBtn').addEventListener('click',()=>{
+  ['tri_a','tri_b','tri_c','tri_right_height','tri_right_width','tri_eq_side','tri_iso_base','tri_iso_side','quad_a','quad_b','quad_h1','quad_h2'].forEach(id=>{
+    const elIn=el(id); if(!elIn) return;
+    const defaults={tri_a:800,tri_b:900,tri_c:1000,tri_right_height:1500,tri_right_width:1000,tri_eq_side:1000,tri_iso_base:1200,tri_iso_side:1000,quad_a:800,quad_b:950,quad_h1:1500,quad_h2:1500};
+    elIn.value=defaults[id];
+  });
+  resultsEl.innerHTML='აირჩიე ფიგურა, ჩაწერე ზომები და დააჭირე "გამოთვლას" 👆';
+  svgGroup.innerHTML=''; edgeBtnsContainer.innerHTML=''; state.lastComputation=null;
 });
 
-updateEdgeButtons();
+/* ---------- init ---------- */
+updateTriangleInputsUI();
 </script>
+
 </body>
 </html>
